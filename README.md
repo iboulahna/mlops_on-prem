@@ -1,5 +1,23 @@
 # mlops_on-prem
 
+The aim of this project is to develop a churn model based on on-premise mlops pipeline. 
+
+The technos used in the pipeline are : 
+
+-python, 
+-mlflow, 
+-airflow github actions. 
+
+The source data : "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv" 
+
+
+
+
+
+
+
+## Referrences 
+ 
 on prem : https://medium.com/towards-data-engineering/data-engineering-for-ml-building-a-customer-churn-prediction-pipeline-with-airflow-f6b50daf5443
 aws (flask app): https://github.com/aravinda-1402/Customer-Churn-Prediction 
 https://dev.to/mage_ai/guide-to-churn-prediction-part-1-gather-clean-13g4
