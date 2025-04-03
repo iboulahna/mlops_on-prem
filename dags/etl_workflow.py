@@ -64,20 +64,47 @@ def train_model():
     joblib.dump(model, '../models/logistic_model.pkl')
     print("Modèle entraîné et sauvegardé")
 
-# Définir les arguments du DAG
+# # Définir les arguments du DAG
+# default_args = {
+#     'owner': 'airflow',
+#     'start_date': datetime(2025, 3, 17),
+#     'retries': 1,
+# }
+
+# # Créer le DAG
+# dag = DAG(
+#     'etl_workflow',
+#     default_args=default_args,
+#     description='Un workflow ETL pour extraire, préparer et entraîner un modèle',
+#     schedule_interval=None,  # Peut être changé en fonction de la fréquence que tu veux
+# )
+
+from datetime import timedelta
+
+# Définir les arguments du DAG avec la date de début
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime(2025, 3, 17),
-    'retries': 1,
+    'start_date': datetime(2025, 3, 17, 23, 30),  # Modifier la date de début pour permettre une exécution plus tôt
+    'end_date': datetime(2025, 3, 17, 23, 55),
+    'retries': 0,
+    'catchup': False,
 }
+# dag = DAG(
+#     'etl_workflow',
+#     default_args=default_args,
+#     description='Un workflow ETL pour extraire, préparer et entraîner un modèle',
+#     schedule_interval='*/1 * * * *',  # Exécution toutes les minutes
+#     max_active_runs=1,  # Limite à une exécution à la fois
+# )
 
-# Créer le DAG
 dag = DAG(
     'etl_workflow',
     default_args=default_args,
     description='Un workflow ETL pour extraire, préparer et entraîner un modèle',
-    schedule_interval=None,  # Peut être changé en fonction de la fréquence que tu veux
+    schedule_interval='*/1 * * * *',  # Exécuter toutes les minutes
 )
+
+# Tes tâches et leur ordre d'exécution
 
 # Définir les tâches
 task_extract_save = PythonOperator(
