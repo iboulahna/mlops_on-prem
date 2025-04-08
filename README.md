@@ -91,6 +91,18 @@ To set up this project on your local machine, follow these steps:
 
 - The model training is part of the ETL pipeline. Once the cleaned data is available, the logistic regression model is trained and saved as `logistic_model.pkl`.
 
+## Batch Processing Workflow (Synthetic Data Generation)
+
+To trigger the `batch_processing_workflow` DAG, which generates and saves synthetic data, follow these steps:
+
+### 1. Trigger the DAG
+
+You can manually trigger the `batch_processing_workflow` using the following command:
+
+```bash
+airflow dags trigger batch_processing_workflow
+
+
 ## Notes
 
 - This project is currently in its first version. Future enhancements will include model deployment, monitoring, and more sophisticated pipeline automation.
