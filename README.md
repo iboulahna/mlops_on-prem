@@ -101,7 +101,7 @@ You can manually trigger the `batch_processing_workflow` using the following com
 
 ```bash
 airflow dags trigger batch_processing_workflow
-
+```
 
 ## Notes
 
