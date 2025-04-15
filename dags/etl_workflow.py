@@ -9,6 +9,8 @@ import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
+# 21447612054535 
+
 # Définir la fonction de sauvegarde des données
 def save_data(df):
     df.to_csv('../data/raw_data.csv', index=False)
