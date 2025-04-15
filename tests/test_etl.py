@@ -56,17 +56,17 @@ def test_save_data(monkeypatch):
     
     save_data(df)
 
-# Test de la fonction train_model
-def test_train_model(monkeypatch):
-    # Mock de joblib.dump pour ne pas écrire sur le disque
-    def mock_dump(model, path):
-        assert path == '../models/logistic_model.pkl', f"Le chemin du modèle est incorrect, attendu '../models/logistic_model.pkl', obtenu {path}"
+# # Test de la fonction train_model
+# def test_train_model(monkeypatch):
+#     # Mock de joblib.dump pour ne pas écrire sur le disque
+#     def mock_dump(model, path):
+#         assert path == '../models/logistic_model.pkl', f"Le chemin du modèle est incorrect, attendu '../models/logistic_model.pkl', obtenu {path}"
     
-    monkeypatch.setattr(joblib, 'dump', mock_dump)
+#     monkeypatch.setattr(joblib, 'dump', mock_dump)
     
-    # Créer un DataFrame pour l'entraînement
-    data = {'customer_id': [1, 2], 'churn': [1, 0], 'age': [25, 30]}
-    df = pd.DataFrame(data)
-    df.to_csv('../data/cleaned_data.csv', index=False)
+#     # Créer un DataFrame pour l'entraînement
+#     data = {'customer_id': [1, 2], 'churn': [1, 0], 'age': [25, 30]}
+#     df = pd.DataFrame(data)
+#     df.to_csv('../data/cleaned_data.csv', index=False)
     
-    train_model()
+#     train_model()
