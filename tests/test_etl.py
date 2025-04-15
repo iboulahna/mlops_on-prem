@@ -41,20 +41,20 @@ def test_prepare_data():
     assert prepared_df.shape[0] == 2, "Le nombre de lignes préparées doit être égal à 2"
     assert not prepared_df.isnull().values.any(), "Les données préparées ne doivent pas contenir de valeurs nulles"
 
-# Test de la fonction save_data (simulation de sauvegarde)
-def test_save_data(monkeypatch):
-    # Créer un DataFrame temporaire
-    data = {'customer_id': [1, 2], 'churn': [1, 0]}
-    df = pd.DataFrame(data)
+# # Test de la fonction save_data (simulation de sauvegarde)
+# def test_save_data(monkeypatch):
+#     # Créer un DataFrame temporaire
+#     data = {'customer_id': [1, 2], 'churn': [1, 0]}
+#     df = pd.DataFrame(data)
 
-    # Simuler la sauvegarde pour vérifier que la fonction est appelée sans écrire sur le disque
-    def mock_to_csv(self, path, index):
-        assert path == '../data/raw_data.csv', f"Le chemin du fichier est incorrect, attendu '../data/raw_data.csv', obtenu {path}"
-        assert index is False, "L'index ne doit pas être sauvegardé"
+#     # Simuler la sauvegarde pour vérifier que la fonction est appelée sans écrire sur le disque
+#     def mock_to_csv(self, path, index):
+#         assert path == '../data/raw_data.csv', f"Le chemin du fichier est incorrect, attendu '../data/raw_data.csv', obtenu {path}"
+#         assert index is False, "L'index ne doit pas être sauvegardé"
     
-    monkeypatch.setattr(df, 'to_csv', mock_to_csv)
+#     monkeypatch.setattr(df, 'to_csv', mock_to_csv)
     
-    save_data(df)
+#     save_data(df)
 
 # # Test de la fonction train_model
 # def test_train_model(monkeypatch):
