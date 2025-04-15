@@ -1,0 +1,53 @@
+stages:
+  - build
+  - test
+  - deploy
+  - save_model
+
+# Variables pour l'environnement de production
+variables:
+  DOCKER_IMAGE_NAME: "churn-model"
+  DOCKER_REGISTRY: "localhost:5000"
+  MLFLOW_URI: "http://mlflow-server:5000"
+
+# Build du Docker
+build:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME .
+    - docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME
+  only:
+    - master
+    - develop
+
+# Test du modèle
+test:
+  stage: test
+  script:
+    - pytest tests/
+  only:
+    - master
+
+# Déploiement sur le serveur de pré-prod
+deploy-preprod:
+  stage: deploy
+  script:
+    - ssh user@preprod-server "docker pull $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME && docker run -d $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME"
+  only:
+    - develop
+
+# Déploiement en production
+deploy-prod:
+  stage: deploy
+  script:
+    - ssh user@prod-server "docker pull $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME && docker run -d $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME"
+  only:
+    - master
+
+# Sauvegarde des modèles sur MLflow
+save-model:
+  stage: save_model
+  script:
+    - mlflow log-artifact $MLFLOW_URI
+  only:
+    - master
