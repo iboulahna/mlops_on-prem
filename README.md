@@ -39,7 +39,16 @@ MLOPS_ON_PREM
 4. **Notebooks**  
    - `feature_eng.ipynb`: A Jupyter notebook used for exploratory data analysis (EDA) and feature engineering. It contains code for preparing the data before feeding it into the model.
 
-5. **Virtual Environment (`venv`)**  
+5. **Flask Application (`flask_app.py`)**  
+   - A Flask application serving the trained model via a REST API endpoint for predictions. This app is containerized using Docker and deployed on Kubernetes using Helm.
+
+6. **Docker**  
+   - The Dockerfile defines how to containerize the Flask application for easy deployment.
+
+7. **Kubernetes and Helm**  
+   - The application is deployed on Kubernetes, with Helm used to manage the deployment and scaling of the Flask application.
+
+8. **Virtual Environment (`venv`)**  
    - This directory contains the isolated environment for this project. It includes all necessary libraries for running the ETL, model training, and feature engineering tasks.
 
 ## Setup Instructions
@@ -90,6 +99,39 @@ To set up this project on your local machine, follow these steps:
 ## Model Training
 
 - The model training is part of the ETL pipeline. Once the cleaned data is available, the logistic regression model is trained and saved as `logistic_model.pkl`.
+
+
+## Deploying the Flask Application
+
+1. **Build the Docker image** for the Flask application:
+   ```bash
+   docker build -t flask-demo-app:1.0.0 .
+   ```
+
+2. **Run the Flask application locally**:
+   ```bash
+   docker run -p 5000:5000 flask-demo-app:1.0.0
+   ```
+
+3. **Test the API** by sending a POST request with JSON data:
+   ```bash
+   curl -X POST -H "Content-Type: application/json"    -d '{"features": [1.23, 3.45, 6.78, 9.01]}'    http://localhost:5000/predict
+   ```
+
+## Kubernetes Deployment with Helm
+
+1. **Install Helm** (if not already installed):
+   - Follow the [Helm installation guide](https://helm.sh/docs/intro/install/) to install Helm.
+
+2. **Deploy the Flask application on Kubernetes** using the Helm chart:
+   ```bash
+   helm install flask-demo-app ./flask-demo-app-chart
+   ```
+
+3. **Access the application**:
+   - The Flask app will be accessible via the Kubernetes service on the assigned port.
+
+
 
 ## Batch Processing Workflow (Synthetic Data Generation)
 
